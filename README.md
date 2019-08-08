@@ -4,17 +4,12 @@ This is a Docker image to run ometiff_tiler.py using pyvips, a Python binding to
 
 ## Run
 ```
-docker build --tag=ometifftiler .
-```
-This will create a docker image with the tag ometifftiler.
-
-```
 docker run  
     -e "CHANNEL_PAGE_PAIRS=channel0:0 channel1:1"
     -e "DATASET_NAME=name"
     --mount "type=bind,src=/source.ome.tif=/input.ome.tif"
     --mount "type=bind,src=/destination,destination=/output_dir"
-    --name tiler ometifftiler
+    --name tiler gehlenborglab/ome-tiff-tiler:v0.0.1
 ```
 
 This will create a container with the name tiler. Replace `channel0:0 channel1:1`, `name`, `source.ome.tif`, and `/destination` with your desired input.

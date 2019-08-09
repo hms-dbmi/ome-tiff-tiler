@@ -40,6 +40,16 @@ And two mounts should be provided:
 
 If tests pass, we're just pushing to DockerHub by hand:
 ```bash
-# First, set VERSION.
+# We should only push from master:
+git checkout master
+git pull
+
+# First, set the new VERSION:
+VERSION=v0.0.????
 docker tag ome-tiff-tiler gehlenborglab/ome-tiff-tiler:$VERSION
 docker push gehlenborglab/ome-tiff-tiler:$VERSION
+
+# And also make a git tag:
+git tag $VERSION
+git push origin $VERSION
+```

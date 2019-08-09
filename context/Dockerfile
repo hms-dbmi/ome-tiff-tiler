@@ -14,4 +14,4 @@ CMD python ometiff_tiler.py \
     --ometiff_file /input.ome.tif \
     --channel_page_pairs $CHANNEL_PAGE_PAIRS \
     --output_directory /output_dir \
-    --prefix $PREFIX \
+    --prefix $PREFIX

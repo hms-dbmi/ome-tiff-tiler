@@ -13,8 +13,9 @@ docker build --tag=$NAME context
 end build
 
 start run
-INPUT=`realpath fixtures/test.ome.tif`
-OUTPUT=`realpath fixtures/output`
+# `realpath` is better, but not installed by default on travis.
+INPUT=`pwd`/fixtures/test.ome.tif
+OUTPUT=`pwd`/fixtures/output
 rm -rf "$OUTPUT"
 mkdir "$OUTPUT"
 docker run \

@@ -4,13 +4,13 @@ import argparse
 import os
 
 
-def tile_ometiff(filename, channel_pages, output_directory, data_name):
+def tile_ometiff(filename, channel_pages, output_directory, prefix):
     for (channel, page) in channel_pages:
         image = pyvips.Image.tiffload(filename, page=page)
 
         path = os.path.join(
             output_directory,
-            '{}.images.{}'.format(data_name, channel)
+            '{}.images.{}'.format(prefix, channel)
         )
 
         if not os.path.exists(path):
@@ -32,8 +32,8 @@ if __name__ == '__main__':
         '--output_directory', required=True,
         help='Directory for output')
     parser.add_argument(
-        '--dataset_name', required=True,
-        help='Name for dataset')
+        '--prefix', required=True,
+        help='Prefix for tile filenames')
     args = parser.parse_args()
 
     channel_pages = [pair.split(':') for pair in args.channel_page_pairs]
@@ -42,5 +42,5 @@ if __name__ == '__main__':
         filename=args.ometiff_file,
         channel_pages=channel_pages,
         output_directory=args.output_directory,
-        data_name=args.dataset_name
+        prefix=args.prefix
     )

@@ -1,6 +1,7 @@
 # OME-TIFF Tiler
 
-This Docker image uses [libvips](https://jcupitt.github.io/libvips/) to convert
+Builds [ome-tiff-tiler](https://hub.docker.com/r/gehlenborglab/ome-tiff-tiler) Docker image:
+This image uses [libvips](https://jcupitt.github.io/libvips/) to convert
 [OME-TIFF](https://docs.openmicroscopy.org/ome-model/6.0.1/ome-tiff/) files to
 [DeepZoom](https://en.wikipedia.org/wiki/Deep_Zoom) tiles for each image plane.
 

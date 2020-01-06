@@ -38,7 +38,7 @@ And two mounts should be provided:
 ./test.sh
 ```
 
-If tests pass, we're just pushing to DockerHub by hand:
+If tests pass, we're just pushing to DockerHub by hand: 
 ```bash
 # We should only push from master:
 git checkout master
@@ -46,6 +46,8 @@ git pull
 
 # First, set the new VERSION:
 VERSION=v0.0.????
+# If need be, build the image
+docker build --tag=ome-tiff-tiler context
 docker tag ome-tiff-tiler gehlenborglab/ome-tiff-tiler:$VERSION
 docker push gehlenborglab/ome-tiff-tiler:$VERSION
 

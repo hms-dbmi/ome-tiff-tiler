@@ -16,7 +16,7 @@ def tile_ometiff(filename, channel_pages, output_directory, prefix):
         if not os.path.exists(path):
             os.mkdir(path)
 
-        pyvips.Image.dzsave(image, os.path.join(path, channel))
+        pyvips.Image.dzsave(image, os.path.join(path, channel), overlap=0, tile_size=256)
 
 
 if __name__ == '__main__':

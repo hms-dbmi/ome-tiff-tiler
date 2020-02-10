@@ -13,6 +13,8 @@ docker build --tag=ome-tiff-tiler context
 
 ## Run
 
+Example:
+
 ```bash
 docker run \
     -rm \
@@ -22,13 +24,16 @@ docker run \
     --mount "type=bind,src=YOUR_OUTPUT,dst=/output_dir" \
     ome-tiff-tiler
 ```
+
 (Or `gehlenborglab/ome-tiff-tiler:latest` to pull from DockerHub.)
 
-Two environment variables should be set:
-- `CHANNEL_PAGE_PAIRS`: Space-delimited pairs of layer name and corresponding TIFF index.
-- `PREFIX`: Prefix to prepend to tile filenames.
+Environment variables should be set:
 
-And two mounts should be provided:
+- `CHANNEL_PAGE_PAIRS`: (Only for use with `dz` pyramid type) Space-delimited pairs of layer name and corresponding TIFF index.
+- `PREFIX`: Prefix to prepend to tile filenames.
+- `SERVER_URL`: (Only for use with `tiff` pyramid type) For creating metadata that can be used as a JSON, put in the protocol, host, and any (other) prefix of the server_url
+- `PYRAMID_TYPE`: One of `dz` and `tiff` for either Deepzoom (channel clamped) or TIFF pyramid
+  And two mounts should be provided:
 - Replace `YOUR_FILE.tif` with absolute path of the OME-TIFF to tile.
 - Replace `YOUR_OUTPUT` with absolute path of directory where the tiles should go.
 
@@ -38,7 +43,8 @@ And two mounts should be provided:
 ./test.sh
 ```
 
-If tests pass, we're just pushing to DockerHub by hand: 
+If tests pass, we're just pushing to DockerHub by hand:
+
 ```bash
 # We should only push from master:
 git checkout master

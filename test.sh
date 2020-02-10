@@ -22,6 +22,15 @@ docker run \
     --rm \
     -e "CHANNEL_PAGE_PAIRS=polyT:0 nuclei:1" \
     -e "PREFIX=test_prefix" \
+    -e "PYRAMID_TYPE=dz" \
+    --mount "type=bind,src=$INPUT,dst=/input.ome.tif" \
+    --mount "type=bind,src=$OUTPUT,dst=/output_dir" \
+    "$NAME"
+docker run \
+    --rm \
+    -e "PREFIX=test_prefix_tiff" \
+    -e "PYRAMID_TYPE=tiff" \
+    -e "SERVER_URL=https://example.com/" \
     --mount "type=bind,src=$INPUT,dst=/input.ome.tif" \
     --mount "type=bind,src=$OUTPUT,dst=/output_dir" \
     "$NAME"

@@ -1,0 +1,9 @@
+{
+  "width": 50,
+  "height": 50,
+  "tile_size": 512,
+  "channels": {
+    "polyT": "https:/example.com/test_prefix_tiff.images/polyT.ome.tiff",
+    "nuclei": "https:/example.com/test_prefix_tiff.images/nuclei.ome.tiff"
+  }
+}

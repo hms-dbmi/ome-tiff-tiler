@@ -37,24 +37,16 @@ def tile_tiff(filename, output_directory, prefix, server_url):
         metadata_str, process_namespaces=True, namespaces=namespaces
     )["OME"]["Image"]["Pixels"]
     channel_metadata = image_metadata["Channel"]
-    output_metadata["channels"] = {}
+    output_metadata = {}
     output_subdirectory = f"{prefix}.images"
     path = Path(output_directory, output_subdirectory)
     print(f"Writing images to {path}")
     for channel in channel_metadata:
         # Channel1:0 - this appears to be an error in vanderbilt's metadata
-        match = re.match("Channel(:?)(\d+):(\d+)", channel["@ID"])
-        vanderbilt = match.group(1) != ':'
-        if vanderbilt:
-            output_metadata["channels"][channel["@Name"]] = int(match.group(2))
-        # Channel:0:1 - this is the standard
-        else:
-            output_metadata["channels"][channel["@Name"]] = int(match.group(3))
-    for channel in output_metadata["channels"]:
+        output_metadata[channel["@Name"]] = {}
+    for i, channel in enumerate(output_metadata):
         Path(path).mkdir(exist_ok=True)
-        image = pyvips.Image.tiffload(
-            filename, page=output_metadata["channels"][channel]
-        )
+        image = pyvips.Image.tiffload(filename, page=i)
         image.tiffsave(
             str(Path(path, f"{channel}.ome.tiff")),
             strip=True,
@@ -64,9 +56,10 @@ def tile_tiff(filename, output_directory, prefix, server_url):
             pyramid=True,
             compression="VIPS_FOREIGN_TIFF_COMPRESSION_DEFLATE",
         )
-        output_metadata["channels"][channel] = str(
+        output_metadata[channel]["tileSource"] = str(
             Path(server_url, Path(output_subdirectory, f"{channel}.ome.tiff"))
         )
+        output_metadata[channel]["sample"] = 1
     tiff_json_path = str(Path(path, "tiff.json"))
     print(f"Writing metadata to {tiff_json_path}")
     with open(tiff_json_path, "w") as outfile:

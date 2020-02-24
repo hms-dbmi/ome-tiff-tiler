@@ -37,9 +37,6 @@ def tile_tiff(filename, output_directory, prefix, server_url):
         metadata_str, process_namespaces=True, namespaces=namespaces
     )["OME"]["Image"]["Pixels"]
     channel_metadata = image_metadata["Channel"]
-    output_metadata["width"] = int(image_metadata["@SizeX"])
-    output_metadata["height"] = int(image_metadata["@SizeY"])
-    output_metadata["tile_size"] = tile_size
     output_metadata["channels"] = {}
     output_subdirectory = f"{prefix}.images"
     path = Path(output_directory, output_subdirectory)

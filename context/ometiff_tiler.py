@@ -57,8 +57,8 @@ def tile_tiff(filename, output_directory, prefix, server_url):
             pyramid=True,
             compression="VIPS_FOREIGN_TIFF_COMPRESSION_DEFLATE",
         )
-        output_metadata[channel]["tileSource"] = str(
-            urljoin(server_url, str(Path(output_subdirectory, f"{channel}.ome.tiff")))
+        output_metadata[channel]["tileSource"] = urljoin(
+            server_url, str(Path(output_subdirectory, f"{channel}.ome.tiff"))
         )
         output_metadata[channel]["sample"] = 1
     tiff_json_path = str(Path(path, "tiff.json"))

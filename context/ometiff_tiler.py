@@ -2,6 +2,7 @@
 import pyvips
 import argparse
 from pathlib import Path
+from urllib.parse import urljoin
 import re
 import json
 import xmltodict
@@ -56,8 +57,8 @@ def tile_tiff(filename, output_directory, prefix, server_url):
             pyramid=True,
             compression="VIPS_FOREIGN_TIFF_COMPRESSION_DEFLATE",
         )
-        output_metadata[channel]["tileSource"] = str(
-            Path(server_url, Path(output_subdirectory, f"{channel}.ome.tiff"))
+        output_metadata[channel]["tileSource"] = urljoin(
+            server_url, str(Path(output_subdirectory, f"{channel}.ome.tiff"))
         )
         output_metadata[channel]["sample"] = 1
     tiff_json_path = str(Path(path, "tiff.json"))

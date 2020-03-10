@@ -6,6 +6,7 @@ from urllib.parse import urljoin
 import re
 import json
 import xmltodict
+import math
 from enum import Enum
 
 
@@ -48,6 +49,11 @@ def tile_tiff(filename, output_directory, prefix, server_url):
     for i, channel in enumerate(output_metadata):
         Path(path).mkdir(exist_ok=True)
         image = pyvips.Image.tiffload(filename, page=i)
+        square_bound = max(
+            2 ** math.ceil(math.log(image.get('height'), 2)),
+            2 ** math.ceil(math.log(image.get('width'), 2)),
+        )
+        image = image.gravity('north-west', square_bound, square_bound)
         image.tiffsave(
             str(Path(path, f"{channel}.ome.tiff")),
             strip=True,
